@@ -14,8 +14,6 @@ public class RoomBookingSaxParser implements RoomBookingParser {
 
     public String tmpLocalName;
 
-    public RoomBooking roomBooking = new RoomBooking();
-
     /**
      * Parse an xml file provided as an input stream
      *
@@ -23,19 +21,27 @@ public class RoomBookingSaxParser implements RoomBookingParser {
      * @return
      */
     public RoomBooking parse(InputStream inputStream) {
+        RoomBooking roomBooking = new RoomBooking();
 
         try {
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
             SAXParser saxParser = spf.newSAXParser();
-            saxParser.parse(inputStream, new RoomBookingHandler());
+            saxParser.parse(inputStream, new RoomBookingHandler(roomBooking));
         } catch (Exception e) {
             e.printStackTrace();
+            roomBooking = null;
         }
         return roomBooking;
     }
 
     private class RoomBookingHandler extends DefaultHandler {
+
+        private RoomBooking roomBooking;
+
+        public RoomBookingHandler(RoomBooking roomBooking) {
+            this.roomBooking = roomBooking;
+        }
 
         public void startElement(String namespaceURI,
                                  String localName,
@@ -52,26 +58,21 @@ public class RoomBookingSaxParser implements RoomBookingParser {
             String valeur = new String(ch, start, length);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-            if (!valeur.equals('\n')) {
-                if (tmpLocalName.equals("label")) {
-                    roomBooking.setRoomLabel(valeur);
+            if (tmpLocalName.equals("label")) {
+                roomBooking.setRoomLabel(valeur);
+            } else if (tmpLocalName.equals("username")) {
+                roomBooking.setUsername(valeur);
+            } else if (tmpLocalName.equals("startDate")) {
+                try {
+                    roomBooking.setStartDate(dateFormat.parse(valeur));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                if (tmpLocalName.equals("username")) {
-                    roomBooking.setUsername(valeur);
-                }
-                if (tmpLocalName.equals("startDate")) {
-                    try {
-                        roomBooking.setStartDate(dateFormat.parse(valeur));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (tmpLocalName.equals("endDate")) {
-                    try {
-                        roomBooking.setEndDate(dateFormat.parse(valeur));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+            } else if (tmpLocalName.equals("endDate")) {
+                try {
+                    roomBooking.setEndDate(dateFormat.parse(valeur));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
         }
