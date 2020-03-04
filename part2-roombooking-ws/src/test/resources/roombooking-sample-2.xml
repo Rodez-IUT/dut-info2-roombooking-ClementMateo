@@ -1,5 +1,5 @@
 <roomBookingRequest xmlns="http://xmlws.roombooking/rb/schema">
-    <room >
+    <room>
         <label>B603</label>
     </room>
     <user>

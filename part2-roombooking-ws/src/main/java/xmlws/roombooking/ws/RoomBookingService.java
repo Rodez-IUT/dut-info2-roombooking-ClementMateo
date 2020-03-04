@@ -6,11 +6,12 @@ import xmlws.roombooking.xmltools.RoomBooking;
 
 import java.util.List;
 
-@Mapper @Service
+@Mapper
+@Service
 public interface RoomBookingService {
 
     @Insert("insert into room_booking (id,room_label, username, start_date, end_date) values (#{id},#{roomLabel},#{username},#{startDate},#{endDate})")
-    @SelectKey(statement="SELECT nextVal('rb_sequence')", keyProperty="id", before=true, resultType=Long.class)
+    @SelectKey(statement = "SELECT nextVal('rb_sequence')", keyProperty = "id", before = true, resultType = Long.class)
     public void saveRoomBooking(RoomBooking roomBooking);
 
     @Results({

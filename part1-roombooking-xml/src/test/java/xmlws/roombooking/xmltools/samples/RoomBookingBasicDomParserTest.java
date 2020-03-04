@@ -1,6 +1,7 @@
 package xmlws.roombooking.xmltools.samples;
 
 import org.junit.Test;
+
 import java.io.InputStream;
 
 public class RoomBookingBasicDomParserTest {

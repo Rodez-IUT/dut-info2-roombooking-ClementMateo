@@ -3,22 +3,26 @@ package xmlws.roombooking.xmltools;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import xmlws.roombooking.xmltools.samples.RoomBookingBasicSaxParser;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class RoomBookingSaxParser implements RoomBookingParser {
 
+    public String tmpLocalName;
+
+    public RoomBooking roomBooking = new RoomBooking();
+
     /**
      * Parse an xml file provided as an input stream
+     *
      * @param inputStream the input stream corresponding to the xml file
      * @return
      */
     public RoomBooking parse(InputStream inputStream) {
-
-        RoomBooking roomBooking = new RoomBooking();
 
         try {
             SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -36,24 +40,41 @@ public class RoomBookingSaxParser implements RoomBookingParser {
         public void startElement(String namespaceURI,
                                  String localName,
                                  String qName,
-                                 Attributes atts,
-                                 RoomBooking roomBooking)
+                                 Attributes atts)
                 throws SAXException {
-            if(localName.equals("label")){
-                roomBooking.setRoomLabel(qName);
-            }
-            if(localName.equals("username")){
-                roomBooking.setUsername(qName);
-            }
-            if(localName.equals("username")){
-                roomBooking.setStartDate(qName);
-                roomBooking.setEndDate(qName);
-            }
+
+            tmpLocalName = localName;
         }
 
         public void characters(char[] ch, int start, int length)
                 throws SAXException {
-            System.out.println(new String(ch, start, length));
+
+            String valeur = new String(ch, start, length);
+            SimpleDateFormat dateDebut = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"),
+                    dateFin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+            if (!valeur.equals('\n')) {
+                if (tmpLocalName.equals("label")) {
+                    roomBooking.setRoomLabel(valeur);
+                }
+                if (tmpLocalName.equals("username")) {
+                    roomBooking.setUsername(valeur);
+                }
+                if (tmpLocalName.equals("startDate")) {
+                    try {
+                        roomBooking.setStartDate(dateDebut.parse(valeur));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (tmpLocalName.equals("endDate")) {
+                    try {
+                        roomBooking.setEndDate(dateFin.parse(valeur));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }

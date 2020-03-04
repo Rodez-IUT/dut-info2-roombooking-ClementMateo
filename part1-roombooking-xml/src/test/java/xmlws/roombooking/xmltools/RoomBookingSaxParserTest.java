@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class RoomBookingSaxParserTest {
 
-    private RoomBookingParser roomBookingParser ;
+    private RoomBookingParser roomBookingParser;
 
     @Before
     public void before() {

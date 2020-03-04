@@ -24,8 +24,8 @@ public class RoomBookingServiceTests {
     @Test
     public void testSaveBooking() {
         // given a RoomBooking instance not saved, aka with no id
-        RoomBooking roomBooking = new RoomBooking("A302","JohnDoe",new Date(), new Date());
-        assertThat(roomBooking.getId(),nullValue());
+        RoomBooking roomBooking = new RoomBooking("A302", "JohnDoe", new Date(), new Date());
+        assertThat(roomBooking.getId(), nullValue());
 
         // When saving the room booking
         roomBookingService.saveRoomBooking(roomBooking);
@@ -46,9 +46,9 @@ public class RoomBookingServiceTests {
     @Test
     public void testFindAllRoomBooking() {
         // given 3 room bookings with 2 concerning room A302 saved in the database
-        roomBookingService.saveRoomBooking(new RoomBooking("A302","JohnDoe",new Date(), new Date()));
-        roomBookingService.saveRoomBooking(new RoomBooking("A303","JohnDoe",new Date(), new Date()));
-        roomBookingService.saveRoomBooking(new RoomBooking("A302","BobDoe",new Date(), new Date()));
+        roomBookingService.saveRoomBooking(new RoomBooking("A302", "JohnDoe", new Date(), new Date()));
+        roomBookingService.saveRoomBooking(new RoomBooking("A303", "JohnDoe", new Date(), new Date()));
+        roomBookingService.saveRoomBooking(new RoomBooking("A302", "BobDoe", new Date(), new Date()));
 
         // when I trigger the search of all room bookings for room A302
         List<RoomBooking> roomBookings = roomBookingService.findAllRoomBookingsForRoom("A302");

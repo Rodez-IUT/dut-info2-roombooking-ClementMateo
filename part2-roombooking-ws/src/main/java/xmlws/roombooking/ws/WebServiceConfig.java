@@ -1,4 +1,5 @@
 package xmlws.roombooking.ws;
+
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -14,19 +15,17 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-public class WebServiceConfig extends WsConfigurerAdapter
-{
+public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Bean
-    public ServletRegistrationBean h2servletRegistration(){
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+    public ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings("/console/*");
         return registrationBean;
     }
 
     @Bean
-    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext)
-    {
+    public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
@@ -34,8 +33,7 @@ public class WebServiceConfig extends WsConfigurerAdapter
     }
 
     @Bean(name = "roomBooking")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema roomBookingSchema)
-    {
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema roomBookingSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("RoomBooking");
         wsdl11Definition.setLocationUri("/ws");
@@ -45,8 +43,7 @@ public class WebServiceConfig extends WsConfigurerAdapter
     }
 
     @Bean
-    public XsdSchema roomBookingSchema()
-    {
+    public XsdSchema roomBookingSchema() {
         return new SimpleXsdSchema(new ClassPathResource("/roombooking.xsd"));
     }
 }

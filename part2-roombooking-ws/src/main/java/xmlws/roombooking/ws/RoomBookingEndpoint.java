@@ -16,7 +16,7 @@ public class RoomBookingEndpoint {
 
     private RoomBookingService roomBookingService;
     private RoomBookingParser roomBookingParser;
-    final private String  NAMESPACE_URI = "http://xmlws.roombooking/rb/schema";
+    final private String NAMESPACE_URI = "http://xmlws.roombooking/rb/schema";
 
     @Autowired
     public RoomBookingEndpoint(RoomBookingService roomBookingService, RoomBookingParser roomBookingParser) {

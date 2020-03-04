@@ -12,7 +12,7 @@ import java.io.InputStream;
  * Class for objects responsible of RoomBooking xml files parsing
  * SAX version
  */
-public class RoomBookingBasicSaxParser  {
+public class RoomBookingBasicSaxParser {
 
     /**
      * Parse an xml file provided as an input stream
@@ -37,10 +37,10 @@ public class RoomBookingBasicSaxParser  {
                                  String qName,
                                  Attributes atts)
                 throws SAXException {
-            System.out.println("In element: "+localName);
+            System.out.println("In element: " + localName);
         }
 
-        public void characters(char ch[], int start, int length)
+        public void characters(char[] ch, int start, int length)
                 throws SAXException {
             System.out.println(new String(ch, start, length));
         }
