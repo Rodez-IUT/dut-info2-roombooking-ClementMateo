@@ -28,5 +28,4 @@ public class RoomBookingBasicDomParser {
             e.printStackTrace();
         }
     }
-
 }

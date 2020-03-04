@@ -50,8 +50,7 @@ public class RoomBookingSaxParser implements RoomBookingParser {
                 throws SAXException {
 
             String valeur = new String(ch, start, length);
-            SimpleDateFormat dateDebut = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"),
-                    dateFin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
             if (!valeur.equals('\n')) {
                 if (tmpLocalName.equals("label")) {
@@ -62,14 +61,14 @@ public class RoomBookingSaxParser implements RoomBookingParser {
                 }
                 if (tmpLocalName.equals("startDate")) {
                     try {
-                        roomBooking.setStartDate(dateDebut.parse(valeur));
+                        roomBooking.setStartDate(dateFormat.parse(valeur));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
                 if (tmpLocalName.equals("endDate")) {
                     try {
-                        roomBooking.setEndDate(dateFin.parse(valeur));
+                        roomBooking.setEndDate(dateFormat.parse(valeur));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
